@@ -3,7 +3,7 @@ function modifySubtree(parent) {
 
 	div.style = [
 		'height: 50px',
-		'background: #d0'
+		'background: #0d0'
 	].join(';');
 
 	parent.appendChild(div);
