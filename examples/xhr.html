@@ -9,82 +9,14 @@
 <body>
 <p>Open dev tools and call <code>run()</code> in console.</p>
 <script>
-	function justCall() {
-		return Array.from({ length: 100 }).reduce((a, b) => (a * b), 1);
-	}
-
-	function stepOver() {
-		return 1;
-	}
-
-	function stepInto(i = 100) {
-		if (i > 0) {
-			return i + stepInto(i - 1);
-		}
-		return 0;
-	}
-
-	function stepIntoAndOuter() {
-		return stepInto();
-	}
-
-	function goHere() {
-		return 1;
-	}
-
-	function deactivateBreakpoints() {
-		let accum = 0;
-		for(let i = 0; i < 1000; i++) {
-			accum += i;
-		}
-		return accum;
-	}
-
-	function stepIntoWithError(i = 100) {
-		if (i > 0) {
-			return i + stepIntoWithError(i - 1);
-		}
-		throw new Error('My exception');
-	}
-
-	function pauseOnCaughtException() {
-		const a = 1;
-		try {
-			stepIntoWithError();
-		} catch(err) {
-			console.warn(err);
-		}
-		return a;
-	}
-
-	function pauseOnException() {
-		return stepIntoWithError();
-	}
+	const HELP_1 = Array.from({ length: 1000 }).map(() => Math.floor(Math.random() * 101));
+	const HELP_2 = Array.from({ length: 10000 }).map(() => Math.floor(Math.random() * 100));
+	const ARGS = HELP_1.map(arg => HELP_2.includes(arg) ? arg : null);
 
 	function run() {
-		justCall();
-		const a = 1;
-		justCall();
-		const b = stepOver();
-		justCall();
-		const c = stepInto();
-		justCall();
-		const d = stepIntoAndOuter();
-		justCall();
-		justCall();
-		justCall();
-		justCall();
-		justCall();
-		justCall();
-		const e = goHere();
-		justCall();
-		const f = deactivateBreakpoints();
-		justCall();
-		const g = pauseOnCaughtException();
-		justCall();
-		const h = pauseOnException();
-		justCall();
-		return a + b + c + d + e + f + g + h;
+		for(const arg of ARGS){
+			fetch(`http://127.0.0.1/${arg}`);
+		}
 	}
 </script>
 </body>
